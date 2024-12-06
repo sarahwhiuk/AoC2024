@@ -32,3 +32,20 @@ Part1_Total <- sum(Part1_df$X5)
 
 print(Part1_Total)
 
+Col1b <- Col1 %>% 
+  group_by(X1) %>% 
+  mutate(X1_freq = n()) %>% 
+  ungroup()
+
+Col2b <- Col2 %>% 
+  group_by(X4) %>% 
+  mutate(X4_freq = n()) %>% 
+  ungroup()
+
+Part2_df <- Col1b %>% 
+  left_join(Col2b %>% distinct(), by = c("X1" = "X4")) %>% 
+  mutate(X5 = X1 * X4_freq)
+
+Part2_Total <- sum(Part2_df$X5, na.rm = TRUE)
+
+print(Part2_Total)
